@@ -23,25 +23,11 @@ const composeEnhancer =   (process.env.NODE_ENV !== 'production' &&
   
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-
-// const loggedMiddleware = (state) => (next) => (action) => {
-//   if (!action.type) {
-//     return next(action)
-//   }
-//   console.log('type: ', action.type)
-//   console.log('payload: ', action.payload)
-//   console.log('currentState: ', store.getState())
-
-//   next(action)
-
-//   console.log('next state: ', store.getState())
-// }
-
+// src\store\middleware\logger.js
 // const middleWares = [loggedMiddleware]
 
 const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares));
 
-// with logger middleware
 export const store = createStore (
   persistedReducer,
   undefined,
