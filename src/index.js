@@ -7,6 +7,8 @@ import { Provider } from 'react-redux';
 //  has been retrieved and saved to redux. 
 import { PersistGate } from 'redux-persist/integration/react';
 import { UserProvider } from './contexts/user-context';
+import { CategoriesProvider } from './contexts/categories-context';
+import { CartProvider } from './contexts/cart-context';
 
 import App from './App';
 import { store, persistor } from './store/store'
@@ -22,14 +24,16 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      
-        <BrowserRouter>
-          <UserProvider>
-            <App />
-          </UserProvider>
-        </BrowserRouter>
-     
-      </PersistGate>
+      <CategoriesProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <UserProvider>
+              <App />
+            </UserProvider>
+          </BrowserRouter>
+        </CartProvider>
+      </CategoriesProvider>
+    </PersistGate>
   </Provider>
 );
 

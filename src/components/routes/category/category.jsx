@@ -1,8 +1,9 @@
 import {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux'
+import { useContext } from 'react';
 
-import { selectCategories } from '../../../store/categories/categories.selector'
+import { CategoriesContext } from '../../../contexts/categories-context';
+
 import Product from '../../product/product';
 
 import {
@@ -14,7 +15,17 @@ import {
 const Category = () => {
     // routes/shop   <Route path=':category' element={<Category />} />
     const { category } = useParams();
-    const categoriesMap = useSelector(selectCategories)
+
+    // [ {items: [{id: 1, name: 'Brown Brim, ...}, {...}], title: 'hats'}, {…}, ...]
+    const { categories } = useContext(CategoriesContext)
+
+    // { hats: Array(9), jackets: Array(5), mens: Array(6), ... }
+    const categoriesMap = categories?.reduce((acc, el) => {
+         const {title, items} = el
+         acc[title.toLowerCase()] = items
+         return acc
+    }, {})
+
     const [products, setProducts] = useState(categoriesMap[category]);
   
     useEffect(() => {

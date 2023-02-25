@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux';
+import { useContext } from 'react';
 
+import { CategoriesContext } from '../../../contexts/categories-context';
 import Product from '../../product/product'
-import { selectCategories } from '../../../store/categories/categories.selector'
 
 import {
     CategoryPreviewContainer,
@@ -11,10 +11,17 @@ import {
 } from './category-preview.styles'
 
 const CategoriesPreview = () => {
-    const categoriesMap = useSelector(selectCategories);
-    // let hatArr = categoriesMap['hats']
-    // {hats: Array(9), jackets: Array(5), mens: Array(6), ... }
 
+    // [ {items: [{id: 1, name: 'Brown Brim, ...}, {...}], title: 'hats'}, {…}, ...]
+    const { categories } = useContext(CategoriesContext)    // obj to arr
+
+    // { hats: Array(9), jackets: Array(5), mens: Array(6), ... }
+    const categoriesMap = categories?.reduce((acc, el) => {
+        const {title, items} = el
+        acc[title.toLowerCase()] = items
+        return acc
+    }, {})
+    
     return (
         <>
             {
