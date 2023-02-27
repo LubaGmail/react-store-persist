@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useContext } from 'react';
 
 import { CategoriesContext } from '../../../contexts/categories-context';
-
+import arrayToMap from '../../../utils/array-to-map'
 import Product from '../../product/product';
 
 import {
@@ -18,14 +18,9 @@ const Category = () => {
 
     // [ {items: [{id: 1, name: 'Brown Brim, ...}, {...}], title: 'hats'}, {…}, ...]
     const { categories } = useContext(CategoriesContext)
-
-    // { hats: Array(9), jackets: Array(5), mens: Array(6), ... }
-    const categoriesMap = categories?.reduce((acc, el) => {
-         const {title, items} = el
-         acc[title.toLowerCase()] = items
-         return acc
-    }, {})
-
+     
+    // {hats: Array(9), jackets: Array(5), mens: Array(6), ...}
+    const categoriesMap = arrayToMap(categories)
     const [products, setProducts] = useState(categoriesMap[category]);
   
     useEffect(() => {
