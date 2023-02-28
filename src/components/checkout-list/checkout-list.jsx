@@ -1,21 +1,15 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { useContext } from 'react'
 
-import { selectCartItems, selectCartTotalCost } from '../../store/cart/cart.selector'
-import { CART_ACTION_TYPES } from '../../store/cart/cart.types'
-
+import { CartContext } from '../../contexts/cart-context'
 import CheckoutItem from '../checkout-item/checkout-item'
 
 import { CheckoutContainer } from "./checkout-list.styles"
 
 const CheckoutList = () => {
-    const cartItems = useSelector(selectCartItems)
-    const totalCost = useSelector(selectCartTotalCost)
-    const dispatch = useDispatch()
+    const { cartItems,  cartTotalCost} = useContext(CartContext)
 
     const clearCart = () => {
-        dispatch({
-            type: CART_ACTION_TYPES.CLEAR_CART
-        })
+       
     }
     
     return (
@@ -41,7 +35,7 @@ const CheckoutList = () => {
                     <tfoot>
                         <tr>
                             <th colSpan={2}>Total Cost: </th>
-                            <td colSpan={4}>${totalCost}</td>
+                            <td colSpan={4}>${cartTotalCost}</td>
                         </tr>
                     </tfoot>
                 </table>
