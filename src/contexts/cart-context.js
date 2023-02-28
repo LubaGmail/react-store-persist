@@ -7,7 +7,9 @@ export const CartContext = createContext({
     cartTotalCost: 0,
     cartItems: [],
     addItemToCart: () => null,
-    updateItemQuantity: () => null
+    removeItemFromCart: () => null,
+    updateItemQuantity: () => null,
+    clearCart: () => null
 })
 
 export const isItemInCart = (product, items) => {
@@ -49,12 +51,33 @@ export const CartProvider = ({ children }) => {
         setCartItems(items)
     }
 
+    const removeItemFromCart = (product) => {
+        let items = cartItems.filter(el => {
+            return el.id !== product.id
+        })
+        setCartItems(items)
+    }
+
     const updateItemQuantity = (product, isMinus) => {
         let items = updateQuantity(product, cartItems, isMinus)
         setCartItems(items)
     }
     
-    const value = { isCartOpen, setIsCartOpen, cartTotalCount, cartTotalCost, cartItems, addItemToCart, updateItemQuantity }
+    const clearCart = () => {
+        setCartItems([])
+    }
+
+    const value = {
+        isCartOpen,
+        setIsCartOpen,
+        cartTotalCount,
+        cartTotalCost,
+        cartItems,
+        addItemToCart,
+        removeItemFromCart,
+        updateItemQuantity,
+        clearCart
+    }
     return(
         <>
             <CartContext.Provider value={value}>

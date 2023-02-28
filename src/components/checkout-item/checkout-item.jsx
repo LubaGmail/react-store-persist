@@ -8,7 +8,7 @@ import { ImageContainer, ClickableSpan, ClickableTd } from './checkout-item.styl
 const CheckoutItem = ({ item }) => {
     const { name, imageUrl, price, quantity } = item
     const quantityRef = useRef()
-    const { updateItemQuantity } = useContext(CartContext)
+    const { updateItemQuantity, removeItemFromCart } = useContext(CartContext)
   
     const subtractQuantity = () => {
         let x = parseInt( (quantityRef.current.innerText).toString() )
@@ -24,8 +24,8 @@ const CheckoutItem = ({ item }) => {
         quantityRef.current.innerText = x.toString()
     }
 
-    const handleRemoveItem = () => {
-
+    const removeItem = () => {
+        removeItemFromCart(item)
     }
 
     return (
@@ -40,7 +40,7 @@ const CheckoutItem = ({ item }) => {
                 <ClickableSpan onClick={addQuantity}>  &#10095; </ClickableSpan>
             </td>
             <td>${price}</td>
-            <ClickableTd  onClick={handleRemoveItem}>
+            <ClickableTd  onClick={removeItem}>
                 <span>&#10005;</span>
             </ClickableTd>  
         </>

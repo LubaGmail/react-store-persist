@@ -6,10 +6,10 @@ import CheckoutItem from '../checkout-item/checkout-item'
 import { CheckoutContainer } from "./checkout-list.styles"
 
 const CheckoutList = () => {
-    const { cartItems,  cartTotalCost} = useContext(CartContext)
+    const { cartItems,  cartTotalCost, clearCart} = useContext(CartContext)
 
-    const clearCart = () => {
-       
+    const handleClearCart = () => {
+       clearCart()
     }
     
     return (
@@ -40,7 +40,7 @@ const CheckoutList = () => {
                     </tfoot>
                 </table>
 
-                <button onClick={clearCart} disabled={cartItems.length === 0} >
+                <button onClick={handleClearCart} disabled={cartItems.length === 0} >
                     Clear Cart 
                 </button>
             </CheckoutContainer>
